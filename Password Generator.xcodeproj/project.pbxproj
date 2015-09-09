@@ -11,6 +11,9 @@
 		A3D6B1031B9BC2A300B2F273 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3D6B1021B9BC2A300B2F273 /* Images.xcassets */; };
 		A3D6B1061B9BC2A300B2F273 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3D6B1041B9BC2A300B2F273 /* MainMenu.xib */; };
 		A3D6B1121B9BC2A300B2F273 /* Password_GeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D6B1111B9BC2A300B2F273 /* Password_GeneratorTests.swift */; };
+		A3E5455D1B9FBC7E00581C7A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E5455B1B9FBC7E00581C7A /* MainViewController.swift */; };
+		A3E5455E1B9FBC7E00581C7A /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3E5455C1B9FBC7E00581C7A /* MainViewController.xib */; };
+		A3E545621B9FCA1D00581C7A /* IntegerOnlyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E545611B9FCA1D00581C7A /* IntegerOnlyFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +35,9 @@
 		A3D6B10B1B9BC2A300B2F273 /* Password GeneratorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Password GeneratorTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3D6B1101B9BC2A300B2F273 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3D6B1111B9BC2A300B2F273 /* Password_GeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Password_GeneratorTests.swift; sourceTree = "<group>"; };
+		A3E5455B1B9FBC7E00581C7A /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		A3E5455C1B9FBC7E00581C7A /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		A3E545611B9FCA1D00581C7A /* IntegerOnlyFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegerOnlyFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +83,9 @@
 				A3D6B1021B9BC2A300B2F273 /* Images.xcassets */,
 				A3D6B1041B9BC2A300B2F273 /* MainMenu.xib */,
 				A3D6B0FE1B9BC2A300B2F273 /* Supporting Files */,
+				A3E5455B1B9FBC7E00581C7A /* MainViewController.swift */,
+				A3E5455C1B9FBC7E00581C7A /* MainViewController.xib */,
+				A3E545611B9FCA1D00581C7A /* IntegerOnlyFormatter.swift */,
 			);
 			path = "Password Generator";
 			sourceTree = "<group>";
@@ -187,6 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3D6B1031B9BC2A300B2F273 /* Images.xcassets in Resources */,
+				A3E5455E1B9FBC7E00581C7A /* MainViewController.xib in Resources */,
 				A3D6B1061B9BC2A300B2F273 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -206,6 +216,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3D6B1011B9BC2A300B2F273 /* AppDelegate.swift in Sources */,
+				A3E5455D1B9FBC7E00581C7A /* MainViewController.swift in Sources */,
+				A3E545621B9FCA1D00581C7A /* IntegerOnlyFormatter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +408,7 @@
 				A3D6B1171B9BC2A300B2F273 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A3D6B1181B9BC2A300B2F273 /* Build configuration list for PBXNativeTarget "Password GeneratorTests" */ = {
 			isa = XCConfigurationList;
@@ -404,6 +417,7 @@
 				A3D6B11A1B9BC2A300B2F273 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
