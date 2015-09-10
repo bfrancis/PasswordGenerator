@@ -14,6 +14,7 @@ class MainViewController: NSViewController {
     var numPasswordsCounter = 1
     var numPasswordsFormatter = IntegerOnlyFormatter()
     var passwords = [Password]()
+    let generator = PasswordGenerator()
     
     @IBOutlet weak var numPasswordsTextField: NSTextField!
     @IBOutlet weak var numPasswordsStepper: NSStepper!
@@ -33,6 +34,20 @@ class MainViewController: NSViewController {
         
         debug("Text Entered: " + sender.stringValue)
         debug("Formatter Minimum: " + numPasswordsFormatter.minimum.stringValue)
+    }
+    
+    @IBAction func generateButtonClicked(sender: NSButton) {
+        // Empty passwords array
+        passwords = [Password]()
+        
+        // Populate passwords array
+        for x in (1...numPasswordsCounter) {
+            var pass = generator.generate()
+            
+            println("Password: " + pass.value)
+            
+            passwords.append(pass)
+        }
     }
     
     override func viewDidLoad() {

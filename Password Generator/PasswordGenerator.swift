@@ -8,47 +8,72 @@
 
 import Cocoa
 
-class PasswordGenerator: NSObject {
+class PasswordGenerator {
     var pattern: String
     var lastPassword: Password?
+    var intToChar: (Int) -> Character
+    var letters: [Character]
+    var vowels: [Character]
+    var consonants: [Character]
+    var digits: [Int]
     
-    override init() {
+    init() {
         self.pattern = "CvccvcDD"
+        self.intToChar = { x in return Character(UnicodeScalar(x)) }
         self.lastPassword = nil
+        self.letters = (65...90).map(intToChar)
+        self.vowels = Array("AEIOU")
+        self.consonants = letters.filter({ !contains(Array("AEIOU"), $0) })
+        self.digits = (0..<10).map({(x: Int) -> Int in return x})
     }
     
-    init(pattern: String) {
+    convenience init(pattern: String) {
+        self.init()
         self.pattern = pattern
-        self.lastPassword = nil
     }
     
-    func generate() -> String {
+    func randomFromArray(arr: Array<Character>) -> Character {
+        let count = UInt32(arr.count)
+        let index = Int(arc4random_uniform(count))
+        
+        return arr[index]
+    }
+    
+    func randomFromArray(arr: Array<Int>) -> Int {
+        let count = UInt32(arr.count)
+        let index = Int(arc4random_uniform(count))
+        
+        return arr[index]
+    }
+    
+    func generate() -> Password {
         var password = String()
-        for x in pattern {
+        var count = 1
+        for x in self.pattern {
             switch(x) {
             case Character("C"):
-                println("Uppercase consonant")
+                password += String(randomFromArray(consonants)).uppercaseString
                 break
             case Character("c"):
-                println("Lowercase consonant")
+                password += String(randomFromArray(consonants)).lowercaseString
                 break
             case Character("V"):
-                println("Uppercase vowel")
+                password += String(randomFromArray(vowels)).uppercaseString
                 break
             case Character("v"):
-                println("Lowercase vowel")
+                password += String(randomFromArray(vowels)).lowercaseString
                 break
             case Character("D"):
-                println("Digit")
+                password += String(randomFromArray(digits))
                 break
             case Character("d"):
-                println("Digit")
+                password += String(randomFromArray(digits))
                 break
             default:
                 println("Invalid.")
             }
         }
         
-        return String()
+        return Password(value: password, pattern: self.pattern)
     }
 }
