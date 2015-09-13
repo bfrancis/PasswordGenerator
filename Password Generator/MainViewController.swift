@@ -19,6 +19,9 @@ class MainViewController: NSViewController {
     @IBOutlet weak var numPasswordsTextField: NSTextField!
     @IBOutlet weak var numPasswordsStepper: NSStepper!
     @IBOutlet weak var passwordsTableView: NSTableView!
+    @IBOutlet weak var selectAllButton: NSButton!
+    @IBOutlet weak var unselectAllButton: NSButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +35,8 @@ class MainViewController: NSViewController {
         
         numPasswordsStepper.maxValue = Double(numPasswordsFormatter.maximum)
         numPasswordsStepper.minValue = Double(numPasswordsFormatter.minimum)
+        
+            
         
         // "Bind" `numPasswordsCounter` to both the text field
         // and the stepper
@@ -69,42 +74,71 @@ extension MainViewController {
     }
     
     @IBAction func generateButtonClicked(sender: NSButton) {
+        var range = NSRange()
+        range.location = 0
+        range.length = self.passwords.count
+        
+        debug("Number of rows in table: \(range.length)")
+        
+        self.passwordsTableView.removeRowsAtIndexes(NSIndexSet(indexesInRange: range), withAnimation: nil)
+        
         // Empty passwords array
         passwords = [Password]()
         
-        // Populate passwords array
+        // (Re)Populate passwords array
         for x in (1...numPasswordsCounter) {
             var pass = generator.generate()
-            
-//            println("Password: " + pass.value)
-            
             passwords.append(pass)
         }
         
-        var range = NSRange()
-        range.location = passwords.startIndex
         range.length = passwords.endIndex
         
-    self.passwordsTableView.insertRowsAtIndexes(NSIndexSet(indexesInRange: range), withAnimation: NSTableViewAnimationOptions.EffectGap)
+        self.passwordsTableView.insertRowsAtIndexes(NSIndexSet(indexesInRange: range), withAnimation: NSTableViewAnimationOptions.EffectGap)
+    }
+    
+    @IBAction func selectAllButtonPressed(sender: NSButton) {
+        var checkboxColumnIndex = passwordsTableView.columnWithIdentifier("SelectBoxColumn")
+        var rowsCount = self.numberOfRowsInTableView(passwordsTableView)
+        
+        debug("Number of rows: \(rowsCount)")
+        
+        for row in (0..<rowsCount) {
+            var view = passwordsTableView.viewAtColumn(checkboxColumnIndex, row: row, makeIfNecessary: false) as! NSView
+            
+            var subviews = view.subviews
+            
+            for i in (0..<subviews.count) {
+                var currentSubView: AnyObject = subviews[i]
+                
+                if let checkbox = currentSubView as? NSButton {
+                    checkbox.
+                }
+            }
+        }
     }
 }
 
 extension MainViewController: NSTableViewDataSource {
     func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+        
+        debug("Passwords count: \(self.passwords.count)")
         return self.passwords.count
     }
     
     func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
         var cellView: NSTableCellView = tableView.makeViewWithIdentifier(tableColumn!.identifier, owner: self) as! NSTableCellView
         
-        debug("tableView(): Making cell")
-        
+        // Create a password cell view
         if tableColumn!.identifier == "PasswordColumn" {
-            debug("Making PasswordColumn cell")
             let password = self.passwords[row]
             cellView.textField!.stringValue = password.value
             return cellView
         }
+        
+        // Create a select box cell view
+//        if tableColumn!.identifier == "SelectBoxColumn" {
+//            var selectBox = NSCheck
+//        }
         
         return cellView
     }
