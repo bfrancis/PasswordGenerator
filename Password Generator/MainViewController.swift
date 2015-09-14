@@ -14,6 +14,7 @@ class MainViewController: NSViewController {
     var numPasswordsCounter = 1
     var numPasswordsFormatter = IntegerOnlyFormatter()
     var passwords = [Password]()
+    var objects = [[String:AnyObject]]()
     var pasteboard = NSPasteboard.generalPasteboard()
     let generator = PasswordGenerator()
     
@@ -29,7 +30,7 @@ class MainViewController: NSViewController {
         
         // Configure Formatter
         numPasswordsFormatter.minimum = 1
-        numPasswordsFormatter.maximum = 9999
+        numPasswordsFormatter.maximum = 999
         
         // Bind formatter to text field
         numPasswordsTextField.formatter = numPasswordsFormatter
@@ -62,19 +63,19 @@ class MainViewController: NSViewController {
         // Iterate through each row of the Table View
         for row in (0..<rowsCount) {
             // The view containing the check box
-            var view = passwordsTableView.viewAtColumn(checkboxColumnIndex, row: row, makeIfNecessary: false) as! NSView
-            
-            // An array of subviews within the checkbox column
-            var subviews = view.subviews
-            
-            // Iterate through all the subviews and try to find
-            // an NSButton object (the checkbox)
-            for i in (0..<subviews.count) {
-                var currentSubView: AnyObject = subviews[i]
+            if let view = passwordsTableView.viewAtColumn(checkboxColumnIndex, row: row, makeIfNecessary: false) as? NSView {
+                // An array of subviews within the checkbox column
+                var subviews = view.subviews
                 
-                // Attempt to downcast the current subview (AnyObject) to an NSButton
-                if let checkbox = currentSubView as? NSButton {
-                    checkboxes.append(checkbox)
+                // Iterate through all the subviews and try to find
+                // an NSButton object (the checkbox)
+                for i in (0..<subviews.count) {
+                    var currentSubView: AnyObject = subviews[i]
+                    
+                    // Attempt to downcast the current subview (AnyObject) to an NSButton
+                    if let checkbox = currentSubView as? NSButton {
+                        checkboxes.append(checkbox)
+                    }
                 }
             }
         }
@@ -132,9 +133,6 @@ extension MainViewController {
         // (A lazy way to unselect all the checkboxes before they get recreated)
         self.unselectAllButtonPressed(sender)
         
-        // Remove all the passwords
-        self.passwordsTableView.removeRowsAtIndexes(NSIndexSet(indexesInRange: range), withAnimation: nil)
-        
         // Empty passwords array
         passwords = [Password]()
         
@@ -147,7 +145,22 @@ extension MainViewController {
         // Update the length on the range (NSRange)
         range.length = passwords.endIndex
         
-        self.passwordsTableView.insertRowsAtIndexes(NSIndexSet(indexesInRange: range), withAnimation: NSTableViewAnimationOptions.EffectGap)
+        passwordsTableView.reloadData()
+        
+        debug("self.objects.count: \(self.objects.count)")
+        
+        for i in (0..<self.objects.count) {
+            debug("self.objects[\(i)]")
+            
+            
+            if let checkbox = self.objects[i]["checkbox"] as? NSButton {
+                debug("Checkbox state at index \(i): \(checkbox.state)")
+            }
+            
+            if let password = self.objects[i]["password"] as? String {
+                debug("Password at index \(i): \(password)")
+            }
+        }
     }
     
     @IBAction func selectAllButtonPressed(sender: NSButton) {
@@ -183,7 +196,7 @@ extension MainViewController {
         for i in (0..<checkboxes.count) {
             if (checkboxes[i].state == NSOnState) {
                password = getPasswordAtRow(i)
-                
+            
                 // Add the password to the string that gets copied
                 // to the clipboard
                 copyToClipboard += password
@@ -213,7 +226,22 @@ extension MainViewController: NSTableViewDataSource {
         if tableColumn!.identifier == "PasswordColumn" {
             let password = self.passwords[row]
             cellView.textField!.stringValue = password.value
+            
+            debug("Inserting password at index \(row)")
+            self.objects.insert((["password" : password.value]), atIndex: row)
+            
             return cellView
+        }
+        
+        if tableColumn!.identifier == "CheckboxColumn" {
+            if (cellView.subviews.count > 0) {
+                for subview in cellView.subviews {
+                    if let button = subview as? NSButton {
+                        debug("Inserting checkbox at index \(row)")
+                        self.objects.insert((["checkbox" : subview]), atIndex: row)
+                    }
+                }
+            }
         }
         
         return cellView
