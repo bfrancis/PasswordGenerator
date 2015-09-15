@@ -9,12 +9,12 @@
 import Cocoa
 
 class MainViewController: NSViewController {
-    let DEBUG = true
+    let DEBUG = false
     
     var numPasswordsCounter = 1
     var numPasswordsFormatter = IntegerOnlyFormatter()
     var passwords = [Password]()
-    var objects = [[String:AnyObject]]()
+    var objects = [Int : Dictionary<String, AnyObject>]()
     var pasteboard = NSPasteboard.generalPasteboard()
     let generator = PasswordGenerator()
     
@@ -52,30 +52,12 @@ class MainViewController: NSViewController {
     }
     
     func getAllCheckboxes() -> [NSButton] {
-        var checkboxes = [NSButton]()
+        var checkboxes: [NSButton] = Array()
         
-        // The index of the column containing the checkboxes
-        var checkboxColumnIndex = passwordsTableView.columnWithIdentifier("SelectBoxColumn")
-        
-        // The number of rows in the Table View
-        var rowsCount = self.numberOfRowsInTableView(passwordsTableView)
-        
-        // Iterate through each row of the Table View
-        for row in (0..<rowsCount) {
-            // The view containing the check box
-            if let view = passwordsTableView.viewAtColumn(checkboxColumnIndex, row: row, makeIfNecessary: false) as? NSView {
-                // An array of subviews within the checkbox column
-                var subviews = view.subviews
-                
-                // Iterate through all the subviews and try to find
-                // an NSButton object (the checkbox)
-                for i in (0..<subviews.count) {
-                    var currentSubView: AnyObject = subviews[i]
-                    
-                    // Attempt to downcast the current subview (AnyObject) to an NSButton
-                    if let checkbox = currentSubView as? NSButton {
-                        checkboxes.append(checkbox)
-                    }
+        for i in (0..<self.objects.count) {
+            if let objectPair = self.objects[i] {
+                if let checkbox = objectPair["checkbox"] as? NSButton {
+                    checkboxes.append(checkbox)
                 }
             }
         }
@@ -83,15 +65,18 @@ class MainViewController: NSViewController {
         return checkboxes
     }
     
+    func addToObjectsArray(index: Int, key: String, value: AnyObject) {
+        if objects[index] != nil {
+            objects[index]?.updateValue(value, forKey: key)
+        } else {
+            objects[index] = [key : value]
+        }
+    }
+    
     func getPasswordAtRow(row: Int) -> String {
-        var passwordColumnIndex = passwordsTableView.columnWithIdentifier("PasswordColumn")
-        
-        // The view containing the password
-        var view = passwordsTableView.viewAtColumn(passwordColumnIndex, row: row, makeIfNecessary: false) as! NSView
-        
-        if let cellView = view as? NSTableCellView {
-            if let textField = cellView.textField {
-                return textField.stringValue
+        if let object = self.objects[row] {
+            if let password = object["password"] as? String {
+                return password
             }
         }
         
@@ -146,21 +131,6 @@ extension MainViewController {
         range.length = passwords.endIndex
         
         passwordsTableView.reloadData()
-        
-        debug("self.objects.count: \(self.objects.count)")
-        
-        for i in (0..<self.objects.count) {
-            debug("self.objects[\(i)]")
-            
-            
-            if let checkbox = self.objects[i]["checkbox"] as? NSButton {
-                debug("Checkbox state at index \(i): \(checkbox.state)")
-            }
-            
-            if let password = self.objects[i]["password"] as? String {
-                debug("Password at index \(i): \(password)")
-            }
-        }
     }
     
     @IBAction func selectAllButtonPressed(sender: NSButton) {
@@ -222,23 +192,27 @@ extension MainViewController: NSTableViewDataSource {
     func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
         var cellView: NSTableCellView = tableView.makeViewWithIdentifier(tableColumn!.identifier, owner: self) as! NSTableCellView
         
+        debug("In row \(row)")
+        
         // Create a password cell view
         if tableColumn!.identifier == "PasswordColumn" {
             let password = self.passwords[row]
             cellView.textField!.stringValue = password.value
             
             debug("Inserting password at index \(row)")
-            self.objects.insert((["password" : password.value]), atIndex: row)
+            addToObjectsArray(row, key: "password", value: password.value)
             
             return cellView
         }
         
+        
+        // Add checkbox to objects dictionary
         if tableColumn!.identifier == "CheckboxColumn" {
             if (cellView.subviews.count > 0) {
                 for subview in cellView.subviews {
                     if let button = subview as? NSButton {
                         debug("Inserting checkbox at index \(row)")
-                        self.objects.insert((["checkbox" : subview]), atIndex: row)
+                        addToObjectsArray(row, key: "checkbox", value: subview)
                     }
                 }
             }
