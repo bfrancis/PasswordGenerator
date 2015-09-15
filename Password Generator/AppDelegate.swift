@@ -17,10 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         mainViewController = MainViewController(nibName: "MainViewController", bundle: nil)
-        
-        
         window.contentView.addSubview(mainViewController.view)
-        
         mainViewController.view.frame = (window.contentView as! NSView).bounds
     }
 
