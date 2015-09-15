@@ -16,6 +16,9 @@
 		A3E545621B9FCA1D00581C7A /* IntegerOnlyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E545611B9FCA1D00581C7A /* IntegerOnlyFormatter.swift */; };
 		A3E545641BA123B500581C7A /* Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E545631BA123B500581C7A /* Password.swift */; };
 		A3E545661BA1245F00581C7A /* PasswordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E545651BA1245F00581C7A /* PasswordGenerator.swift */; };
+		A3F996301BA7B2E1009C1A92 /* AppIcon_128x128.png in Resources */ = {isa = PBXBuildFile; fileRef = A3F9962D1BA7B2E1009C1A92 /* AppIcon_128x128.png */; };
+		A3F996311BA7B2E1009C1A92 /* AppIcon_16x16.png in Resources */ = {isa = PBXBuildFile; fileRef = A3F9962E1BA7B2E1009C1A92 /* AppIcon_16x16.png */; };
+		A3F996321BA7B2E1009C1A92 /* AppIcon_32x32.png in Resources */ = {isa = PBXBuildFile; fileRef = A3F9962F1BA7B2E1009C1A92 /* AppIcon_32x32.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +45,9 @@
 		A3E545611B9FCA1D00581C7A /* IntegerOnlyFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntegerOnlyFormatter.swift; sourceTree = "<group>"; };
 		A3E545631BA123B500581C7A /* Password.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Password.swift; sourceTree = "<group>"; };
 		A3E545651BA1245F00581C7A /* PasswordGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordGenerator.swift; sourceTree = "<group>"; };
+		A3F9962D1BA7B2E1009C1A92 /* AppIcon_128x128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon_128x128.png; sourceTree = "<group>"; };
+		A3F9962E1BA7B2E1009C1A92 /* AppIcon_16x16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon_16x16.png; sourceTree = "<group>"; };
+		A3F9962F1BA7B2E1009C1A92 /* AppIcon_32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon_32x32.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +71,7 @@
 		A3D6B0F21B9BC2A300B2F273 = {
 			isa = PBXGroup;
 			children = (
+				A3F9962C1BA7B2E1009C1A92 /* Icons */,
 				A3D6B0FD1B9BC2A300B2F273 /* Password Generator */,
 				A3D6B10E1B9BC2A300B2F273 /* Password GeneratorTests */,
 				A3D6B0FC1B9BC2A300B2F273 /* Products */,
@@ -119,6 +126,17 @@
 				A3D6B1101B9BC2A300B2F273 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A3F9962C1BA7B2E1009C1A92 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				A3F9962D1BA7B2E1009C1A92 /* AppIcon_128x128.png */,
+				A3F9962E1BA7B2E1009C1A92 /* AppIcon_16x16.png */,
+				A3F9962F1BA7B2E1009C1A92 /* AppIcon_32x32.png */,
+			);
+			name = Icons;
+			path = "Password Generator/Icons";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,8 +220,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3D6B1031B9BC2A300B2F273 /* Images.xcassets in Resources */,
+				A3F996311BA7B2E1009C1A92 /* AppIcon_16x16.png in Resources */,
+				A3F996301BA7B2E1009C1A92 /* AppIcon_128x128.png in Resources */,
 				A3E5455E1B9FBC7E00581C7A /* MainViewController.xib in Resources */,
 				A3D6B1061B9BC2A300B2F273 /* MainMenu.xib in Resources */,
+				A3F996321BA7B2E1009C1A92 /* AppIcon_32x32.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

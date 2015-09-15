@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Password Generator/MainViewController.swift"
-            timestampString = "463973824.490891"
+            timestampString = "463975166.224981"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "211"
-            endingLineNumber = "211"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
             landmarkName = "copySelectedButtonPressed(_:)"
             landmarkType = "5">
          </BreakpointContent>
